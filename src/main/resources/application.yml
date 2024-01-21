@@ -1,0 +1,22 @@
+
+server:
+  port: 8090
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 250MB
+  datasource:
+    url: jdbc:postgresql://localhost:5432/kanban
+    username: postgres
+    password: 1111
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
