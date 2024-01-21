@@ -1,5 +1,6 @@
 package com.example.kanbanbackend.payload.task;
 
+import com.example.kanbanbackend.payload.subtask.SubtaskAddDTO;
 import com.example.kanbanbackend.payload.subtask.SubtaskDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
@@ -24,5 +25,5 @@ public class TaskAddDTO {
 
     private String description;
 
-    private SubtaskDTO subtasks;
+    private SubtaskAddDTO subtasks;
 }

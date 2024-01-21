@@ -24,5 +24,5 @@ public class BoardColumn {
     private Board board;
 
     @ManyToOne(optional = false)
-    private Columns column;
+    private Status column;
 }

@@ -1,6 +1,6 @@
 package com.example.kanbanbackend.payload.board;
 
-import com.example.kanbanbackend.payload.columns.ColumnDTO;
+import com.example.kanbanbackend.payload.status.StatusDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,5 +19,5 @@ public class BoardDTO {
 
     private String name;
 
-    private List<ColumnDTO> columns;
+    private List<StatusDTO> columns;
 }

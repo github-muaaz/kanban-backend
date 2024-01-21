@@ -21,7 +21,7 @@ public class DataLoader implements CommandLineRunner {
     private String ddlMode;
 
     private final BoardRepository boardRepository;
-    private final ColumnRepository columnRepository;
+    private final StatusRepository columnRepository;
     private final BoardColumnRepository boardColumnRepository;
     private final TaskRepository taskRepository;
     private final SubtaskRepository subtaskRepository;
@@ -49,21 +49,21 @@ public class DataLoader implements CommandLineRunner {
 
 
     private void saveDefaults() {
-        List<Columns> columns = Constants.commonColumns;
+        List<Status> columns = Constants.commonColumns;
 
-        columns.add(Columns.builder()
+        columns.add(Status.builder()
                 .color(Constants.colors[0])
                 .orderNum(100.)
                 .name("todo")
                 .build());
 
-        columns.add(Columns.builder()
+        columns.add(Status.builder()
                 .color(Constants.colors[1])
                 .orderNum(200.)
                 .name("doing")
                 .build());
 
-        columns.add(Columns.builder()
+        columns.add(Status.builder()
                 .color(Constants.colors[2])
                 .orderNum(300.)
                 .name("done")
@@ -90,7 +90,7 @@ public class DataLoader implements CommandLineRunner {
         List<BoardColumn> boardColumns = new ArrayList<>();
 
         for (Board board : boards) {
-            for (Columns column : columns) {
+            for (Status column : columns) {
                 boardColumns.add(BoardColumn.builder()
                         .board(board)
                         .column(column)
@@ -172,61 +172,73 @@ public class DataLoader implements CommandLineRunner {
         subtasks.add(Subtask.builder()
                 .title("Research competitor pricing and business models")
                 .task(tasks.get(1))
+                .isCompleted(false)
                 .build());
 
         subtasks.add(Subtask.builder()
                 .title("Outline a business model that works for our solution")
                 .task(tasks.get(1))
-                        .isCompleted(true)
+                .isCompleted(true)
                 .build());
 
         subtasks.add(Subtask.builder()
                 .title("Talk to potential customers about our proposed solution and ask for fair price expectancy")
                 .task(tasks.get(1))
-                        .isCompleted(true)
+                .isCompleted(true)
                 .build());
         subtasks.add(Subtask.builder()
                 .title("Research competitor pricing and business models")
+                .isCompleted(false)
                 .task(tasks.get(2))
                 .build());
         subtasks.add(Subtask.builder()
                 .title("Talk to potential customers about our proposed solution and ask for fair price expectancy")
+                .isCompleted(false)
                 .task(tasks.get(2))
                 .build());
         subtasks.add(Subtask.builder()
                 .title("Research competitor pricing and business models")
+                .isCompleted(true)
                 .task(tasks.get(3))
                 .build());
         subtasks.add(Subtask.builder()
                 .title("Outline a business model that works for our solution")
+                .isCompleted(true)
                 .task(tasks.get(3))
                 .build());
         subtasks.add(Subtask.builder()
                 .title("Talk to potential customers about our proposed solution and ask for fair price expectancy'")
+                .isCompleted(false)
                 .task(tasks.get(4))
                 .build());
         subtasks.add(Subtask.builder()
                 .title("Research competitor pricing and business models")
+                .isCompleted(true)
                 .task(tasks.get(5))
                 .build());
         subtasks.add(Subtask.builder()
                 .title("Research competitor pricing and business models")
+                .isCompleted(true)
                 .task(tasks.get(5))
                 .build());
         subtasks.add(Subtask.builder()
                 .title("Talk to potential customers about our proposed solution and ask for fair price expectancy")
+                .isCompleted(false)
                 .task(tasks.get(5))
                 .build());
         subtasks.add(Subtask.builder()
                 .title("Research competitor pricing and business models")
                 .task(tasks.get(6))
+                .isCompleted(false)
                 .build());
         subtasks.add(Subtask.builder()
                 .title("Outline a business model that works for our solution")
+                .isCompleted(false)
                 .task(tasks.get(6))
                 .build());
         subtasks.add(Subtask.builder()
                 .title("Talk to potential customers about our proposed solution and ask for fair price expectancy")
+                .isCompleted(false)
                 .task(tasks.get(7))
                 .build());
 

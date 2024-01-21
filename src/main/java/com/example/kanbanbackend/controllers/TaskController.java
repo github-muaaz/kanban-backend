@@ -6,24 +6,24 @@ import com.example.kanbanbackend.payload.task.TaskDTO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.UUID;
 
-@RequestMapping("/task")
+@RequestMapping("api/task")
 public interface TaskController {
 
-    @GetMapping()
-    ApiResult<List<TaskDTO>> get();
-
     @DeleteMapping("/{id}")
-    ApiResult<?> delete(@PathVariable Integer id);
+    ApiResult<?> delete(@PathVariable UUID id);
 
     @GetMapping("/{id}")
-    ApiResult<TaskDTO> get(@PathVariable Integer id);
+    ApiResult<TaskDTO> get(@PathVariable UUID id);
+
+    @GetMapping("/{taskId}/{statusId}")
+    ApiResult<TaskDTO> setStatus(@PathVariable UUID taskId, @PathVariable UUID statusId);
 
     @PostMapping()
     ApiResult<TaskDTO> add(@NotNull @ModelAttribute TaskAddDTO taskAddDTO);
 
     @PutMapping("/{id}")
-    ApiResult<TaskDTO> edit(@PathVariable Integer id, @RequestBody TaskAddDTO taskAddDTO);
+    ApiResult<TaskDTO> edit(@PathVariable UUID id, @RequestBody TaskAddDTO taskAddDTO);
 
 }

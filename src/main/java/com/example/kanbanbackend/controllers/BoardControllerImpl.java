@@ -16,23 +16,23 @@ import java.util.List;
 public class BoardControllerImpl implements BoardController {
 
     private final BoardService boardService;
-
+    @Override
     public ApiResult<List<BoardDTO>> get() {
         return boardService.get();
     }
-
+    @Override
     public ApiResult<?> delete(Integer id) {
         return boardService.delete(id);
     }
-
+    @Override
     public ApiResult<BoardDTO> get(Integer id) {
         return boardService.get(id);
     }
-
+    @Override
     public ApiResult<BoardDTO> add(BoardAddDTO boardAddDTO) {
         return boardService.add(boardAddDTO);
     }
-
+    @Override
     public ApiResult<BoardDTO> edit(Integer id, BoardAddDTO boardAddDTO) {
         return boardService.edit(id, boardAddDTO);
     }

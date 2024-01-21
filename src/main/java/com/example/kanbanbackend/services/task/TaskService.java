@@ -5,16 +5,17 @@ import com.example.kanbanbackend.payload.task.TaskAddDTO;
 import com.example.kanbanbackend.payload.task.TaskDTO;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface TaskService {
 
-    ApiResult<List<TaskDTO>> get();
+    ApiResult<?> delete(UUID id);
 
-    ApiResult<?> delete(Integer id);
-
-    ApiResult<TaskDTO> get(Integer id);
+    ApiResult<TaskDTO> get(UUID id);
 
     ApiResult<TaskDTO> add(TaskAddDTO taskAddDTO);
 
-    ApiResult<TaskDTO> edit(Integer id, TaskAddDTO taskAddDTO);
+    ApiResult<TaskDTO> edit(UUID id, TaskAddDTO taskAddDTO);
+
+    ApiResult<TaskDTO> setStatus(UUID taskId, UUID statusId);
 }

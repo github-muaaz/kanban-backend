@@ -17,7 +17,5 @@ public class SubtaskDTO {
 
     private String title;
 
-    private UUID taskId;
-
     private Boolean isCompleted;
 }

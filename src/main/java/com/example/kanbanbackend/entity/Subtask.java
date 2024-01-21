@@ -25,6 +25,6 @@ public class Subtask {
     @ManyToOne(optional = false)
     private Task task;
 
-    @Column()
+    @Column(nullable = false)
     private Boolean isCompleted = false;
 }

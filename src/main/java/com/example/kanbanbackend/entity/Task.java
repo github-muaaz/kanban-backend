@@ -26,7 +26,7 @@ public class Task {
     private String definition;
 
     @ManyToOne(optional = false)
-    private Columns status;
+    private Status status;
 
     @ManyToOne(optional = false)
     private Board board;

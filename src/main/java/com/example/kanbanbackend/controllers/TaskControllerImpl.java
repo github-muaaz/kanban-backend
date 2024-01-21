@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -16,24 +17,26 @@ import java.util.List;
 public class TaskControllerImpl implements TaskController{
 
     private final TaskService taskService;
-
-    public ApiResult<List<TaskDTO>> get(){
-        return taskService.get();
-    }
-
-    public ApiResult<?> delete(Integer id){
+    @Override
+    public ApiResult<?> delete(UUID id){
         return taskService.delete(id);
     }
-
-    public ApiResult<TaskDTO> get(Integer id){
+    @Override
+    public ApiResult<TaskDTO> get(UUID id){
         return taskService.get(id);
     }
 
+    @Override
+    public ApiResult<TaskDTO> setStatus(UUID taskId, UUID statusId) {
+        return taskService.setStatus(taskId, statusId);
+    }
+
+    @Override
     public ApiResult<TaskDTO> add(TaskAddDTO taskAddDTO){
         return taskService.add(taskAddDTO);
     }
-
-    public ApiResult<TaskDTO> edit(Integer id, TaskAddDTO taskAddDTO){
+    @Override
+    public ApiResult<TaskDTO> edit(UUID id, TaskAddDTO taskAddDTO){
         return taskService.edit(id, taskAddDTO);
     }
 

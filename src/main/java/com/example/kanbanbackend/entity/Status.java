@@ -15,7 +15,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Columns {
+public class Status {
 
     @Id
     @GeneratedValue(generator = "UUID")
