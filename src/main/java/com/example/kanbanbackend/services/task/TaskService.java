@@ -13,7 +13,7 @@ public interface TaskService {
 
     ApiResult<TaskDTO> get(UUID id);
 
-    ApiResult<TaskDTO> add(TaskAddDTO taskAddDTO);
+    ApiResult<?> add(TaskAddDTO taskAddDTO);
 
     ApiResult<TaskDTO> edit(UUID id, TaskAddDTO taskAddDTO);
 

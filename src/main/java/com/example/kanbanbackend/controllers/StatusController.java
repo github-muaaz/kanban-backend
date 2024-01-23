@@ -13,4 +13,6 @@ public interface StatusController {
     @GetMapping("/{boardId}")
     ApiResult<List<StatusDTO>> get(@PathVariable UUID boardId);
 
+    @GetMapping("/common")
+    ApiResult<List<StatusDTO>> getCommon();
 }

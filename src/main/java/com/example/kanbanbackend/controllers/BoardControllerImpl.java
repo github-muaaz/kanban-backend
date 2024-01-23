@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -21,11 +22,11 @@ public class BoardControllerImpl implements BoardController {
         return boardService.get();
     }
     @Override
-    public ApiResult<?> delete(Integer id) {
+    public ApiResult<?> delete(UUID id) {
         return boardService.delete(id);
     }
     @Override
-    public ApiResult<BoardDTO> get(Integer id) {
+    public ApiResult<BoardDTO> get(UUID id) {
         return boardService.get(id);
     }
     @Override
@@ -33,7 +34,7 @@ public class BoardControllerImpl implements BoardController {
         return boardService.add(boardAddDTO);
     }
     @Override
-    public ApiResult<BoardDTO> edit(Integer id, BoardAddDTO boardAddDTO) {
+    public ApiResult<?> edit(UUID id, BoardAddDTO boardAddDTO) {
         return boardService.edit(id, boardAddDTO);
     }
 

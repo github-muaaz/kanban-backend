@@ -20,4 +20,9 @@ public class StatusControllerImpl implements StatusController {
     public ApiResult<List<StatusDTO>> get(UUID boardId) {
         return columnService.get(boardId);
     }
+
+    @Override
+    public ApiResult<List<StatusDTO>> getCommon() {
+        return columnService.getCommon();
+    }
 }

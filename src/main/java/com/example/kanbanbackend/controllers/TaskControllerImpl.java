@@ -32,7 +32,7 @@ public class TaskControllerImpl implements TaskController{
     }
 
     @Override
-    public ApiResult<TaskDTO> add(TaskAddDTO taskAddDTO){
+    public ApiResult<?> add(TaskAddDTO taskAddDTO){
         return taskService.add(taskAddDTO);
     }
     @Override

@@ -5,16 +5,17 @@ import com.example.kanbanbackend.payload.board.BoardAddDTO;
 import com.example.kanbanbackend.payload.board.BoardDTO;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface BoardService {
 
     ApiResult<List<BoardDTO>> get();
 
-    ApiResult<?> delete(Integer id);
+    ApiResult<?> delete(UUID id);
 
-    ApiResult<BoardDTO> get(Integer id);
+    ApiResult<BoardDTO> get(UUID id);
 
     ApiResult<BoardDTO> add(BoardAddDTO boardAddDTO);
 
-    ApiResult<BoardDTO> edit(Integer id, BoardAddDTO boardAddDTO);
+    ApiResult<?> edit(UUID id, BoardAddDTO boardAddDTO);
 }

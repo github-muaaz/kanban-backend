@@ -1,6 +1,6 @@
-package com.example.kanbanbackend.payload.board;
+package com.example.kanbanbackend.payload.status;
 
-import com.example.kanbanbackend.payload.status.StatusAddDTO;
+import com.example.kanbanbackend.payload.task.TaskDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,11 +13,13 @@ import java.util.UUID;
 @Getter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BoardAddDTO {
+public class StatusAddDTO {
 
     private UUID id;
 
     private String name;
 
-    private List<String> columns;
+    private String color;
+
+    private Double orderNum;
 }

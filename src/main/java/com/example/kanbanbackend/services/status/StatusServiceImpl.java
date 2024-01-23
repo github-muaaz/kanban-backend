@@ -6,6 +6,7 @@ import com.example.kanbanbackend.payload.api.ApiResult;
 import com.example.kanbanbackend.payload.status.StatusDTO;
 import com.example.kanbanbackend.payload.task.TaskDTO;
 import com.example.kanbanbackend.repository.*;
+import com.example.kanbanbackend.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class StatusServiceImpl implements StatusService {
     private final TaskRepository taskRepository;
     private final SubtaskRepository subtaskRepository;
     private final BoardColumnRepository boardColumnRepository;
+    private final CommonStatusRepository commonStatusRepository;
 
     @Override
     public ApiResult<List<StatusDTO>> get(UUID boardId){
@@ -32,6 +34,31 @@ public class StatusServiceImpl implements StatusService {
         List<BoardColumn> boardColumns = boardColumnRepository.findAllByBoardId(boardId);
 
         return ApiResult.successResponse(mapToColumnDTO(boardColumns, boardId));
+    }
+
+    @Override
+    public ApiResult<List<StatusDTO>> getCommon() {
+        List<CommonStatus> commonStatuses = commonStatusRepository.findAll();
+
+        return ApiResult.successResponse(mapToColumnDTO(commonStatuses));
+    }
+
+    private List<StatusDTO> mapToColumnDTO(List<CommonStatus> commonStatuses) {
+//        System.out.println(Constants.commonColumns);
+
+        return commonStatuses
+                .stream()
+                .map(this::mapToColumnDTO)
+                .toList();
+    }
+
+    private StatusDTO mapToColumnDTO(CommonStatus status) {
+        return StatusDTO.builder()
+                .id(status.getId())
+                .name(status.getName())
+                .color(status.getColor())
+                .orderNum(status.getOrderNum())
+                .build();
     }
 
     private List<StatusDTO> mapToColumnDTO(List<BoardColumn> boardColumns, UUID boardId) {

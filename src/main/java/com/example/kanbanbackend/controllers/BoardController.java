@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("api/board")
 public interface BoardController {
@@ -15,15 +16,15 @@ public interface BoardController {
     ApiResult<List<BoardDTO>> get();
 
     @DeleteMapping("/{id}")
-    ApiResult<?> delete(@PathVariable Integer id);
+    ApiResult<?> delete(@PathVariable UUID id);
 
     @GetMapping("/{id}")
-    ApiResult<BoardDTO> get(@PathVariable Integer id);
+    ApiResult<BoardDTO> get(@PathVariable UUID id);
 
     @PostMapping()
-    ApiResult<BoardDTO> add(@NotNull @ModelAttribute BoardAddDTO boardAddDTO);
+    ApiResult<BoardDTO> add(@NotNull @RequestBody BoardAddDTO boardAddDTO);
 
     @PutMapping("/{id}")
-    ApiResult<BoardDTO> edit(@PathVariable Integer id, @RequestBody BoardAddDTO boardAddDTO);
+    ApiResult<?> edit(@PathVariable UUID id, @RequestBody BoardAddDTO boardAddDTO);
 
 }

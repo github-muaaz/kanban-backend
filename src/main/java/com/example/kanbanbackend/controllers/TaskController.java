@@ -21,7 +21,7 @@ public interface TaskController {
     ApiResult<TaskDTO> setStatus(@PathVariable UUID taskId, @PathVariable UUID statusId);
 
     @PostMapping()
-    ApiResult<TaskDTO> add(@NotNull @ModelAttribute TaskAddDTO taskAddDTO);
+    ApiResult<?> add(@NotNull @RequestBody TaskAddDTO taskAddDTO);
 
     @PutMapping("/{id}")
     ApiResult<TaskDTO> edit(@PathVariable UUID id, @RequestBody TaskAddDTO taskAddDTO);

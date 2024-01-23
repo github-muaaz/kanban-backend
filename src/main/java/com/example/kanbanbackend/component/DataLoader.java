@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -25,6 +22,7 @@ public class DataLoader implements CommandLineRunner {
     private final BoardColumnRepository boardColumnRepository;
     private final TaskRepository taskRepository;
     private final SubtaskRepository subtaskRepository;
+    private final CommonStatusRepository commonStatusRepository;
 
     @Override
     public void run(String... args) {
@@ -49,40 +47,53 @@ public class DataLoader implements CommandLineRunner {
 
 
     private void saveDefaults() {
-        List<Status> columns = Constants.commonColumns;
-
-        columns.add(Status.builder()
-                .color(Constants.colors[0])
-                .orderNum(100.)
-                .name("todo")
-                .build());
-
-        columns.add(Status.builder()
-                .color(Constants.colors[1])
-                .orderNum(200.)
-                .name("doing")
-                .build());
-
-        columns.add(Status.builder()
-                .color(Constants.colors[2])
-                .orderNum(300.)
-                .name("done")
-                .build());
+        List<Status> columns = List.of(
+                Status.builder()
+                        .id(UUID.randomUUID())
+                        .color(Constants.colors[0])
+                        .orderNum(100.)
+                        .name("todo")
+                        .build(),
+                Status.builder()
+                        .id(UUID.randomUUID())
+                        .color(Constants.colors[1])
+                        .orderNum(200.)
+                        .name("doing")
+                        .build(),
+                Status.builder()
+                        .id(UUID.randomUUID())
+                        .color(Constants.colors[2])
+                        .orderNum(300.)
+                        .name("done")
+                        .build()
+        );
 
         columns = columnRepository.saveAll(columns);
+
+        List<CommonStatus> commonStatuses = columns
+                .stream()
+                .map(column -> CommonStatus.builder()
+                        .id(column.getId())
+                        .color(column.getColor())
+                        .name(column.getName())
+                        .orderNum(column.getOrderNum())
+                        .build())
+                .toList();
+
+        commonStatusRepository.saveAll(commonStatuses);
 
         List<Board> boards = new ArrayList<>();
 
         boards.add(Board.builder()
-                .name("Platform Launch")
+                .name("Platform Launch".toLowerCase())
                 .build());
 
         boards.add(Board.builder()
-                .name("Marketing Plan")
+                .name("Marketing Plan".toLowerCase())
                 .build());
 
         boards.add(Board.builder()
-                .name("Roadmap")
+                .name("Roadmap".toLowerCase())
                 .build());
 
         boards = boardRepository.saveAll(boards);

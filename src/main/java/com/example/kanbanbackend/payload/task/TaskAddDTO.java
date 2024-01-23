@@ -6,12 +6,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+import java.util.List;
 import java.util.UUID;
 
 @Setter
 @Getter
 @Builder
+@ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TaskAddDTO {
 
@@ -25,5 +28,5 @@ public class TaskAddDTO {
 
     private String description;
 
-    private SubtaskAddDTO subtasks;
+    private List<SubtaskAddDTO> subtasks;
 }

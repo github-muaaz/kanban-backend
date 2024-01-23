@@ -9,4 +9,7 @@ import java.util.UUID;
 @Repository
 public interface BoardRepository extends JpaRepository<Board, UUID> {
 
+    boolean existsByNameAndIdIsNot(String name, UUID id);
+
+    boolean existsByName(String name);
 }

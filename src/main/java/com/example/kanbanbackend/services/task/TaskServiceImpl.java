@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -22,7 +23,8 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final SubtaskRepository subtaskRepository;
     private final BoardColumnRepository boardColumnRepository;
-    private final StatusRepository columnRepository;
+    private final StatusRepository statusRepository;
+    private final BoardRepository boardRepository;
 
 
     @Override
@@ -41,18 +43,91 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public ApiResult<TaskDTO> add(TaskAddDTO taskAddDTO) {
-        return null;
+    public ApiResult<?> add(TaskAddDTO taskAddDTO) {
+
+        System.out.println(taskAddDTO.toString());
+
+        Board board = boardRepository.findById(taskAddDTO.getBoardId())
+                .orElseThrow(() ->
+                        RestException
+                                .restThrow("BOARD NOT FOUND", HttpStatus.NOT_FOUND));
+
+        Status status;
+
+        if(taskAddDTO.getStatusId() == null)
+            status = getInitialStatus(board);
+        else
+            status = statusRepository.findById(taskAddDTO.getStatusId())
+                .orElseThrow(() ->
+                        RestException
+                                .restThrow("STATUS NOT FOUND", HttpStatus.NOT_FOUND));
+
+        Task task = Task.builder()
+                .board(board)
+                .status(status)
+                .title(taskAddDTO.getTitle())
+                .definition(taskAddDTO.getDescription())
+                .build();
+
+        task = taskRepository.save(task);
+
+        Task finalTask = task;
+
+        taskAddDTO.getSubtasks().forEach(subtaskAddDTO -> {
+            Subtask subtask = Subtask.builder()
+                    .task(finalTask)
+                    .title(subtaskAddDTO.getTitle())
+                    .isCompleted(!Objects.isNull(subtaskAddDTO.getIsCompleted()) && subtaskAddDTO.getIsCompleted())
+                    .build();
+
+            subtaskRepository.save(subtask);
+        });
+
+        return ApiResult.successResponse(mapToTaskDTO(task), "TASK SUCCESSFULLY ADDED");
     }
 
     @Override
     public ApiResult<TaskDTO> edit(UUID id, TaskAddDTO taskAddDTO) {
-        return null;
+        Board board = boardRepository.findById(taskAddDTO.getBoardId())
+                .orElseThrow(() ->
+                        RestException
+                                .restThrow("BOARD NOT FOUND", HttpStatus.NOT_FOUND));
+
+        Status status = statusRepository.findById(taskAddDTO.getStatusId())
+                .orElseThrow(() ->
+                        RestException
+                                .restThrow("STATUS NOT FOUND", HttpStatus.NOT_FOUND));
+
+        Task task = Task.builder()
+                .id(id)
+                .board(board)
+                .status(status)
+                .title(taskAddDTO.getTitle())
+                .definition(taskAddDTO.getDescription())
+                .build();
+
+        task = taskRepository.save(task);
+
+        Task finalTask = task;
+
+        subtaskRepository.deleteAllByTaskId(task.getId());
+
+        taskAddDTO.getSubtasks().forEach(subtaskAddDTO -> {
+            Subtask subtask = Subtask.builder()
+                    .task(finalTask)
+                    .title(subtaskAddDTO.getTitle())
+                    .isCompleted(!Objects.isNull(subtaskAddDTO.getIsCompleted()) && subtaskAddDTO.getIsCompleted())
+                    .build();
+
+            subtaskRepository.save(subtask);
+        });
+
+        return ApiResult.successResponse(mapToTaskDTO(task), "TASK SUCCESSFULLY EDITED");
     }
 
     @Override
     public ApiResult<TaskDTO> setStatus(UUID taskId, UUID statusId) {
-        Status status = columnRepository.findById(statusId)
+        Status status = statusRepository.findById(statusId)
                 .orElseThrow(
                         () -> RestException
                                 .restThrow("STATUS NOT FOUND", HttpStatus.NOT_FOUND));
@@ -63,10 +138,17 @@ public class TaskServiceImpl implements TaskService {
                                 .restThrow("TASK NOT FOUND", HttpStatus.NOT_FOUND));
 
         task.setStatus(status);
-        
+
         task = taskRepository.save(task);
 
         return ApiResult.successResponse(mapToTaskDTO(task));
+    }
+
+    private Status getInitialStatus(Board board) {
+        return boardColumnRepository
+                .findAllByBoardId(board.getId())
+                .stream().min((a, b) -> (int) (a.getColumn().getOrderNum() - b.getColumn().getOrderNum()))
+                .orElse(new BoardColumn()).getColumn();
     }
 
     private TaskDTO mapToTaskDTO(Task task) {

@@ -19,5 +19,5 @@ public class SubtaskAddDTO {
 
     private UUID taskId;
 
-    private Boolean isCompleted;
+    private Boolean isCompleted = false;
 }

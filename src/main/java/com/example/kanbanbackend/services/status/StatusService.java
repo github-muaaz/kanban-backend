@@ -9,4 +9,6 @@ import java.util.UUID;
 public interface StatusService {
 
     ApiResult<List<StatusDTO>> get(UUID boardId);
+
+    ApiResult<List<StatusDTO>> getCommon();
 }
