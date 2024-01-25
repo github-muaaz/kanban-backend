@@ -29,7 +29,16 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public ApiResult<?> delete(UUID id) {
-        return null;
+
+        taskRepository.findById(id)
+                .orElseThrow(() ->
+                        RestException
+                                .restThrow("TASK NOT FOUND", HttpStatus.NOT_FOUND));
+
+        subtaskRepository.deleteAllByTaskId(id);
+        taskRepository.deleteById(id);
+
+        return ApiResult.successResponse("SUCCESSFULLY DELETED");
     }
 
     @Override
