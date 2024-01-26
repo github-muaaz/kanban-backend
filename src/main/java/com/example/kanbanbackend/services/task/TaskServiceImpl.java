@@ -26,7 +26,6 @@ public class TaskServiceImpl implements TaskService {
     private final StatusRepository statusRepository;
     private final BoardRepository boardRepository;
 
-
     @Override
     public ApiResult<?> delete(UUID id) {
 
