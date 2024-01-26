@@ -68,7 +68,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public ApiResult<BoardDTO> add(BoardAddDTO boardAddDTO) {
 
-        if (boardRepository.existsByName(boardAddDTO.getName()))
+        if (boardRepository.existsByNameIgnoreCase(boardAddDTO.getName()))
             throw RestException
                     .restThrow("BOARD ALREADY EXIST", HttpStatus.CONFLICT);
 
@@ -101,7 +101,7 @@ public class BoardServiceImpl implements BoardService {
                 RestException
                         .restThrow("BOARD NOT FOUND", HttpStatus.NOT_FOUND));
 
-        if (boardRepository.existsByNameAndIdIsNot(boardAddDTO.getName(), board.getId()))
+        if (boardRepository.existsByNameIgnoreCaseAndIdIsNot(boardAddDTO.getName(), board.getId()))
             throw RestException
                     .restThrow("BOARD ALREADY EXIST", HttpStatus.CONFLICT);
 

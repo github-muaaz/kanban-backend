@@ -52,9 +52,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public ApiResult<?> add(TaskAddDTO taskAddDTO) {
-
-        System.out.println(taskAddDTO.toString());
-
         Board board = boardRepository.findById(taskAddDTO.getBoardId())
                 .orElseThrow(() ->
                         RestException
