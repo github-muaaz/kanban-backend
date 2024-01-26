@@ -16,6 +16,8 @@ public class DataLoader implements CommandLineRunner {
 
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String ddlMode;
+    @Value("${spring.profiles.active}")
+    private String profile;
 
     private final BoardRepository boardRepository;
     private final StatusRepository columnRepository;
@@ -27,7 +29,7 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        if (Objects.equals(ddlMode, "create")) {
+        if (Objects.equals(profile, "dev") && Objects.equals(ddlMode, "create")) {
             System.out.println("\n\n\n\n\n\n\n\nyou are running with CREATE ddl mode");
             System.out.println("enter 12 to continue");
             Scanner scanner = new Scanner(System.in);
