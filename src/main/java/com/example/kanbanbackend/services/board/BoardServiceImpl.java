@@ -58,8 +58,11 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public ApiResult<BoardDTO> get(UUID id) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() ->
+                        RestException.restThrow("BOARD NOT FOUND", HttpStatus.NOT_FOUND));
 
-        return null;
+        return ApiResult.successResponse(mapToBoardDTO(board));
     }
 
     @Override

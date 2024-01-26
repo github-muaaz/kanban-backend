@@ -20,3 +20,6 @@ spring:
     properties:
       hibernate:
         enable_lazy_load_no_trans: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
